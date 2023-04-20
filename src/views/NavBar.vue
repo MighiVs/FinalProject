@@ -13,8 +13,10 @@
   <script setup>
   import { computed } from 'vue'
   import { useAuthStore } from '../stores/auth'
+  import { useRouter } from 'vue-router'
   
   const authStore = useAuthStore()
+  const router = useRouter()
   
   const isUserLoggedIn = computed(() => {
     return authStore.user !== null
@@ -23,6 +25,8 @@
   
   const handleSignOut = async () => {
     await authStore.signOut()
+    router.push('/')
+
   }
   
   </script>
