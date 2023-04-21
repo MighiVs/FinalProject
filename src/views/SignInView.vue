@@ -7,7 +7,7 @@
       <label>Password: </label>
         <input type="password" v-model="password" required>
       <button type="submit">Sign In</button>
-      <div v-if="error">{{ error }}</div>
+      <span v-if="error">{{ error }}</span>
     </form>
     </main>
   </template>
@@ -32,7 +32,6 @@
         if (!error.value) {
             router.push('/');
         }
-        console.log(authStore.user)
     }
     
 </script>

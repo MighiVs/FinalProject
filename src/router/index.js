@@ -42,6 +42,9 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.user) {
     next('/sign-up')
+  } else if ((to.name === 'sign-in' || to.name === 'sign-up')
+  &&(authStore.user)){
+    next('/')
   } else {
     next()
   }

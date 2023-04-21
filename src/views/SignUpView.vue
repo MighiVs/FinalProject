@@ -9,7 +9,7 @@
       <input type="password" id="password" v-model="password" required />
       <label for="username">Username: </label>
       <input type="text" id="username" v-model="username" required />
-      
+      <span v-if="error">{{ error }}</span>
       <button>Sign Up</button>
     </form>
     <h3 v-if="signedUp">Thank you for Signing Up, now proceed to Sign In.</h3>
