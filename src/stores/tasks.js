@@ -2,23 +2,25 @@ import { defineStore } from 'pinia'
 import supabase from '../supabase'
 import {ref} from 'vue'
 
-export const useTaskStore = defineStore('task', () =>{
+export const useTaskStore = defineStore('tasks', () =>{
   const tasks = ref(null)
   const error = ref(null)
 
-  const fetchTasks = async () => {
-    const { data: tasks } = await supabase
+  const fetchAllTasks = async () => {
+    const { data, error } = await supabase
       .from('tasks')
-      .select('*')
-      .order('id', { ascending: false });
-    tasks.value = tasks;
+      .select()
+    if (error) {
+      error.value = error.message;
+    } else {
+      tasks.value = data;
+    }
+    
   }
   const addTask = async (task) => {
     const { data, error } = await supabase
       .from('tasks')
-      .insert([
-        { task }
-      ])
+      .insert(task)
     if (error) {
       error.value = error.message;
     } else {
@@ -52,30 +54,10 @@ export const useTaskStore = defineStore('task', () =>{
   return {
     tasks,
     error,
-    fetchTasks,
+    fetchAllTasks,
     addTask,
     updateTask,
     deleteTask,
 
   }
 })
-
-/*
-import { defineStore } from 'pinia'
-import supabase from '../supabase'
-
-export const useTaskStore = defineStore('tasks',  {
-  state: () => ({
-    tasks: null
-  }),
-  actions: {
-    async fetchTasks () {
-      const { data: tasks } = await supabase
-        .from('tasks')
-        .select('*')
-        .order('id', { ascending: false });
-      this.tasks = tasks;
-    }
-  }
-})
-*/

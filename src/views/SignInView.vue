@@ -7,7 +7,7 @@
       <label>Password: </label>
         <input type="password" v-model="password" required>
       <button type="submit">Sign In</button>
-      <span v-if="error">{{ error }}</span>
+      <p v-if="authStore.error">{{ authStore.error }}</p>
     </form>
     </main>
   </template>
@@ -24,12 +24,12 @@
 
     const email = ref('');
     const password = ref('');
-    const error = ref(authStore.error)
 
     
     async function signIn() {
+      authStore.resetError();
       await authStore.signIn(email.value, password.value);
-        if (!error.value) {
+        if (!authStore.error) {
             router.push('/');
         }
     }
