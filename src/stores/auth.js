@@ -1,59 +1,66 @@
 import { defineStore } from 'pinia'
 import supabase from '../supabase'
+import {ref, watch} from 'vue'
 
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    user: null,
-    error: null,
-  }),
-  actions: {
-    async fetchUser () {
-      const { data: { user } } = await supabase.auth.getUser()
-      this.user = user;
-    },
-    async signUp(email, password) {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
-      })
-      if (error) {
-        this.error = error.message
-      } else {
-        this.user = user
-      }
-    },
-    async signIn(email, password) {
-      const { user, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
+export const useAuthStore = defineStore('user', () =>{
+  const user = ref(null)
+  const error = ref('')
 
-      if (error) {
-        this.error = error.message
-      } else {
-        this.user = user
-      }
-    },
-    async signOut() {
-      await supabase.auth.signOut()
-      this.user = null
-    },
+  const fetchUser = async () => {
+     user.value = await supabase.auth.user();
 
-    setUser(user) {
-      this.user = user
-    },
+  }
+  const resetError = () => {
+    error.value = '';
+  }
 
-    setError(error) {
-      this.error = error
+  const signUp = async (email, password) => {
+    const result = await supabase.auth.signUp({
+      email,
+      password,
     },
+    )
+    if (result.error) {
+      error.value = result.error.message;
+    }
+    
+  }
+  const signIn = async (email, password) => {
+    const result = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
+    if (result.error) {
+      error.value = result.error.message;
+    } else {
+      user.value = result.data;
+    }
+  }
+  const signOut = async () => {
+    await supabase.auth.signOut();
+    user.value = null;
+  }
+
+  
+ 
+
+  /******************PERSIST USER*************************/
+  if (localStorage.getItem("user")) {
+    user.value = JSON.parse(localStorage.getItem("user"));
+  }
+  watch(user, (userVal) => {
+    localStorage.setItem("user", JSON.stringify(userVal));
   },
-  persist: {
-    enabled: true,
-    strategies: [
-      {
-        key: 'user',
-        storage: localStorage
-      }
-    ]
+  {deep: true});
+  /********************************************************/
+  return {
+    user,
+    error,
+    resetError,
+    fetchUser,
+    signUp,
+    signIn,
+    signOut,
   }
 })
+

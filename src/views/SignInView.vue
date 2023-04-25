@@ -2,18 +2,12 @@
     <main>
         <h1>Sign In</h1>
     <form @submit.prevent="signIn">
-      <label>
-        Email:
+      <label>Email: </label>
         <input type="email" v-model="email" required>
-      </label>
-      <br>
-      <label>
-        Password:
+      <label>Password: </label>
         <input type="password" v-model="password" required>
-      </label>
-      <br>
       <button type="submit">Sign In</button>
-      <div v-if="error">{{ error }}</div>
+      <p v-if="authStore.error">{{ authStore.error }}</p>
     </form>
     </main>
   </template>
@@ -30,12 +24,12 @@
 
     const email = ref('');
     const password = ref('');
-    const error = ref(authStore.error)
 
+    
     async function signIn() {
+      authStore.resetError();
       await authStore.signIn(email.value, password.value);
-      console.log(authStore.user)
-        if (!error.value) {
+        if (!authStore.error) {
             router.push('/');
         }
     }

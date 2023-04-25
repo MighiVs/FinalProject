@@ -1,13 +1,8 @@
 <template>
   <main>
-    <div v-if="!isUserLoggedIn">
-      <h1>Welcome to My To-Do App!</h1>
-      <p>Please, sign in or sign up to continue.</p>
-    </div>
-    <div v-if="isUserLoggedIn">
-      <h1>Welcome back, {{ username }}</h1>
-    </div>
-
+      <h1 v-if="!authStore.user">Welcome to My To-Do App!</h1>
+      <p v-if="!authStore.user">Please, sign in or sign up to continue.</p>
+      <h1 v-if="authStore.user">Greetings! {{ authStore.user.session.user.email}}</h1>
   </main>
 </template>
 
@@ -15,15 +10,8 @@
 
 <script setup>
   import {useAuthStore} from '../stores/auth'
-  import {computed} from 'vue'
 
-  const authStore = useAuthStore()
-  
-  const username = computed(() => {
-    return authStore.user?.displayName
-  })
-  
-  const isUserLoggedIn = computed(() => {
-    return authStore.user !== null
-  })
+  const authStore = useAuthStore();
+
+
 </script>
