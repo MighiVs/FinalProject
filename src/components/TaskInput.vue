@@ -3,6 +3,8 @@
     <div>
       <label for="task">Task: </label>
       <input type="text" id="task" v-model="task" required/>
+      <label for="urgency">Is it urgent?</label>
+      <input type="checkbox" id="urgency" v-model="urgency">
     </div>
     <button type="submit">ADD</button>
   </form>
@@ -20,18 +22,19 @@ const authStore = useAuthStore()
 
 
 const task = ref('')
-
+const urgency = ref(false)
 
 
 const handleAddTask = async () => {
   await taskStore.addTask({
     user_id: authStore.user.session.user.id,
     title: task.value,
+    is_urgent: urgency.value,
     is_complete: false,
   })
   if (taskStore.error) {
     console.log(taskStore.error)
   }
-  await taskStore.fetchAllTasks()
+  taskStore.fetchAllTasks();
 }
 </script>

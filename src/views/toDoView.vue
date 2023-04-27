@@ -1,7 +1,11 @@
 <template>
   <h1>To-Do List</h1>
   <TaskInput/>
-  <TaskList/>
+  <div class="listContainer">
+    <TaskList :listOfComplete="false"/>
+    <TaskList :listOfComplete="true" />
+  </div>
+  
 
 </template>
 
@@ -11,7 +15,6 @@ import { onMounted } from 'vue'
 import TaskInput from '@/components/TaskInput.vue'
 import TaskList from '@/components/TaskList.vue'
 
-
 const taskStore = useTaskStore()
 
 onMounted(async () => {
@@ -20,3 +23,11 @@ onMounted(async () => {
     
 </script>
   
+<style scoped>
+  .listContainer {
+    display: flex;
+    justify-content: space-around;
+  }
+
+
+</style>
