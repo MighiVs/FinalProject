@@ -7,11 +7,17 @@ export const useTaskStore = defineStore('tasks', () => {
   const error = ref(null)
 
   const fetchAllTasks = async () => {
-    const { data, error } = await supabase.from('tasks').select()
+    const { data, error } = await supabase.from('tasks').select().order('id')
     if (error) {
       error.value = error.message
     } else {
       tasks.value = data
+    }
+  }
+  const getTaskById = async (id) => {
+    const { error } = await supabase.from('tasks').select().eq('id', id)
+    if (error) {
+      error.value = error.message
     }
   }
   const addTask = async (task) => {
@@ -39,6 +45,7 @@ export const useTaskStore = defineStore('tasks', () => {
     tasks,
     error,
     fetchAllTasks,
+    getTaskById,
     addTask,
     updateTask,
     deleteTask

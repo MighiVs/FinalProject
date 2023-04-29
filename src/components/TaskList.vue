@@ -5,7 +5,7 @@
     <h4 v-if="status === 2">Completed</h4>
     <p>Number of tasks: {{ filteredTasks.length }}</p>
     <div class="task-list">
-      <TaskCard v-for="(task, index) in filteredTasks" :key="index" :task="task" />
+      <TaskCard v-for="task in filteredTasks" :key="task.id" :task="task" />
     </div>
   </div>
 </template>
@@ -29,6 +29,7 @@ const filteredTasks = computed(() => {
       return taskStore.tasks.filter((task) => task.status === 2)
   }
 })
+
 </script>
 
 <style scoped>
@@ -41,7 +42,6 @@ const filteredTasks = computed(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 400px;
-  overflow: auto;
+  
 }
 </style>

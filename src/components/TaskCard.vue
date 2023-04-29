@@ -3,6 +3,7 @@
     <h4>{{ task.task.title }}</h4>
     <button @click="show = !show">{{ show ? 'Min' : 'Max' }}</button>
     <div v-show="show">
+      <p>{{ task.task.id }}</p>
       <p>
         Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
       </p>

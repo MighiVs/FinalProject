@@ -25,7 +25,7 @@ onMounted(async () => {
 </script>
   
 <style scoped>
-  .list-ontainer {
+  .list-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
