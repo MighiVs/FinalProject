@@ -18,6 +18,7 @@ export const useTaskStore = defineStore('tasks', () => {
     const { error } = await supabase.from('tasks').insert(task)
     if (error) {
       error.value = error.message
+      console.log(error.value)
     }
   }
   const updateTask = async (id, mod) => {
