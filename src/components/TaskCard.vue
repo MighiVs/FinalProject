@@ -1,9 +1,9 @@
 <template>
   <div class="container" :style="{ backgroundColor: cardBackgroundColor }">
+    <ConfettiExplosion v-if="confetti" />
     <h4>{{ task.task.title }}</h4>
     <button @click="show = !show">{{ show ? 'Min' : 'Max' }}</button>
     <div v-show="show">
-      <p>{{ task.task.id }}</p>
       <p>
         Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
       </p>
@@ -26,12 +26,15 @@
 import { defineProps, computed, ref } from 'vue'
 import { useTaskStore } from '@/stores/tasks.js'
 import EditTask from '@/components/EditTask.vue'
+import ConfettiExplosion from 'vue-confetti-explosion'
 
 const taskStore = useTaskStore()
 
 const task = defineProps(['task'])
 const edit = ref(false)
 const show = ref(true)
+
+const confetti = ref(false)
 
 const cardBackgroundColor = computed(() => {
   const hue = (120 - task.task.priority * 1.2) / 360 // Calculate hue value between 0 and 1
@@ -79,6 +82,11 @@ const advanceStatus = async () => {
   }
   taskStore.fetchAllTasks()
 }
+
+if (task.task.status === 2 && task.task.triggered_confetti === false) {
+  confetti.value = true
+  taskStore.triggerConfetti(task.task.id)
+}
 </script>
 
 <style scoped>
@@ -86,5 +94,6 @@ const advanceStatus = async () => {
   border: 1px solid black;
   border-radius: 10px;
   margin: 1em;
+  overflow: visible;
 }
 </style>

@@ -7,7 +7,7 @@ export const useTaskStore = defineStore('tasks', () => {
   const error = ref(null)
 
   const fetchAllTasks = async () => {
-    const { data, error } = await supabase.from('tasks').select().order('id')
+    const { data, error } = await supabase.from('tasks').select().order('inserted_at')
     if (error) {
       error.value = error.message
     } else {
@@ -40,7 +40,13 @@ export const useTaskStore = defineStore('tasks', () => {
       error.value = error.message
     }
   }
-
+  const triggerConfetti = async (id) => {
+    const { error } = await supabase.from('tasks').update({ triggered_confetti: true }).eq('id', id)
+    if (error) {
+      error.value = error.message
+      console.log(error.value)
+    }
+  }
   return {
     tasks,
     error,
@@ -48,6 +54,7 @@ export const useTaskStore = defineStore('tasks', () => {
     getTaskById,
     addTask,
     updateTask,
-    deleteTask
+    deleteTask,
+    triggerConfetti
   }
 })

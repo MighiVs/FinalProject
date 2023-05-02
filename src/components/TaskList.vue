@@ -15,7 +15,10 @@ import { useTaskStore } from '@/stores/tasks.js'
 import TaskCard from './TaskCard.vue'
 import { defineProps, computed } from 'vue'
 
+
 const taskStore = useTaskStore()
+
+
 
 const { status } = defineProps(['status'])
 
@@ -29,6 +32,9 @@ const filteredTasks = computed(() => {
       return taskStore.tasks.filter((task) => task.status === 2)
   }
 })
+
+
+
 
 </script>
 
