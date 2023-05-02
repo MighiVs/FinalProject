@@ -1,57 +1,54 @@
 import { defineStore } from 'pinia'
 import supabase from '../supabase'
-import {ref, watch} from 'vue'
+import { ref, watch } from 'vue'
 
-export const useAuthStore = defineStore('user', () =>{
+export const useAuthStore = defineStore('user', () => {
   const user = ref(null)
   const error = ref('')
 
   const fetchUser = async () => {
-     user.value = await supabase.auth.user();
-
+    user.value = await supabase.auth.user()
   }
   const resetError = () => {
-    error.value = '';
+    error.value = ''
   }
 
   const signUp = async (email, password) => {
     const result = await supabase.auth.signUp({
       email,
-      password,
-    },
-    )
+      password
+    })
     if (result.error) {
-      error.value = result.error.message;
+      error.value = result.error.message
     }
-    
   }
   const signIn = async (email, password) => {
     const result = await supabase.auth.signInWithPassword({
       email,
-      password,
+      password
     })
     if (result.error) {
-      error.value = result.error.message;
+      error.value = result.error.message
     } else {
-      user.value = result.data;
+      user.value = result.data
     }
   }
   const signOut = async () => {
-    await supabase.auth.signOut();
-    user.value = null;
+    await supabase.auth.signOut()
+    user.value = null
   }
-
-  
- 
 
   /******************PERSIST USER*************************/
-  if (localStorage.getItem("user")) {
-    user.value = JSON.parse(localStorage.getItem("user"));
+  if (localStorage.getItem('user')) {
+    user.value = JSON.parse(localStorage.getItem('user'))
   }
-  watch(user, (userVal) => {
-    localStorage.setItem("user", JSON.stringify(userVal));
-  },
-  {deep: true});
+  watch(
+    user,
+    (userVal) => {
+      localStorage.setItem('user', JSON.stringify(userVal))
+    },
+    { deep: true }
+  )
   /********************************************************/
   return {
     user,
@@ -60,7 +57,6 @@ export const useAuthStore = defineStore('user', () =>{
     fetchUser,
     signUp,
     signIn,
-    signOut,
+    signOut
   }
 })
-
