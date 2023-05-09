@@ -40,14 +40,13 @@ const filteredTasks = computed(() => {
 
 <style scoped>
 .container {
-  background-color: aliceblue;
-  padding: 2em;
   text-align: center;
 }
 .task-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  width: 300px;
+  
   
 }
 </style>

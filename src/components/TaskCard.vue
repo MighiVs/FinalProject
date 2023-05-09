@@ -1,8 +1,17 @@
 <template>
   <div class="container" :style="{ backgroundColor: cardBackgroundColor }">
     <ConfettiExplosion v-if="confetti" />
-    <h4>{{ task.task.title }}</h4>
-    <button @click="show = !show">{{ show ? 'Min' : 'Max' }}</button>
+    <div class="mainInfo">
+        <h4>{{ task.task.title }}</h4>
+        <div>
+          <button @click="advanceStatus" v-if="task.task.status < 2"><img src="../assets/icons/right-arrow.png" alt=""></button>
+          <button @click="handleDeleteTask"><img src="../assets/icons/trash.png" alt=""></button>
+        </div>
+      </div>
+    <button class="toggleBtn" @click="show = !show">
+      <img v-if="!show" src="../assets/icons/plus.png" alt="plus">
+      <img v-else src="../assets/icons/minus.png" alt="minus">
+    </button>
     <div v-show="show">
       <p>
         Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
@@ -11,11 +20,10 @@
         Due to: {{ formatDate(task.task.due_to) }}, {{ formatTime(task.task.due_to) }}
       </p>
       <div>
-        <button @click="advanceStatus" v-if="task.task.status < 2">Next Status</button>
-        <button @click="handleDeleteTask">Delete</button>
-      </div>
-      <div>
-        <button @click="edit = !edit">Toggle Edit</button>
+        <button @click="edit = !edit">
+          <img v-if="!edit" src="../assets/icons/edit.png" alt="">
+          <img v-else src="../assets/icons/minus.png" alt="">
+        </button>
         <EditTask v-if="edit" :task="task.task" />
       </div>
     </div>
@@ -28,11 +36,12 @@ import { useTaskStore } from '@/stores/tasks.js'
 import EditTask from '@/components/EditTask.vue'
 import ConfettiExplosion from 'vue-confetti-explosion'
 
+
 const taskStore = useTaskStore()
 
 const task = defineProps(['task'])
 const edit = ref(false)
-const show = ref(true)
+const show = ref(false)
 
 const confetti = ref(false)
 
@@ -90,10 +99,25 @@ if (task.task.status === 2 && task.task.triggered_confetti === false) {
 </script>
 
 <style scoped>
-.container {
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 1em;
-  overflow: visible;
+img {
+  width: 20px;
 }
+.mainInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.toggleBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-block
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  padding: 20px;
+}
+
 </style>

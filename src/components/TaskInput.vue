@@ -12,7 +12,7 @@
       <label for="priority">Priority Level:</label>
       <input type="range" id="priority" v-model="priority" min="1" max="100" />
     </div>
-    <button type="submit">ADD</button>
+    <button class="btn" type="submit">ADD</button>
   </form>
 </template>
 
@@ -42,3 +42,14 @@ const handleAddTask = async () => {
   taskStore.fetchAllTasks()
 }
 </script>
+
+<style scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+  
+</style>
