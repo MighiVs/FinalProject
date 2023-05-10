@@ -13,6 +13,9 @@
       <img v-else src="../assets/icons/minus.png" alt="minus">
     </button>
     <div v-show="show">
+      <p v-if="task.task.description">
+        Description: {{ task.task.description }}
+      </p>
       <p>
         Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
       </p>
@@ -100,24 +103,64 @@ if (task.task.status === 2 && task.task.triggered_confetti === false) {
 
 <style scoped>
 img {
-  width: 20px;
+  width: 25px;
+  margin: 0
 }
+
 .mainInfo {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
+
 .toggleBtn {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  display: inline-block
+  display: inline-block;
+  margin-top: 10px;
 }
+
 .container {
   display: flex;
   flex-direction: column;
   margin: 1em;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
+p {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.editBtn img {
+  width: 16px;
+  margin-right: 5px;
+}
+
+.deleteBtn img {
+  width: 16px;
+  margin-right: 5px;
+}
+.toggleBtn {
+  
+  display: inline-block;
+  width: auto;
+  border: none;
+}
 </style>

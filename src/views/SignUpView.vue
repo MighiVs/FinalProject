@@ -1,7 +1,7 @@
 <template>
   <main>
     <h1>Sign Up</h1>
-    <form class="form" v-if="!signedUp" @submit.prevent="handleSignUp">
+    <form class="form" v-show="!signedUp" @submit.prevent="handleSignUp">
       <div class="form-group">
         <label class="form-label" for="email">Email: </label>
       <input class="form-input" type="email" id="email" v-model="email" required />
@@ -19,6 +19,7 @@
     </form>
     <h4 v-if="signedUp">Thank you for Signing Up, now proceed to Sign In.</h4>
     <p v-if="signedUp">Confirmation email feature is not activated.</p>
+    <div class="void"></div>
   </main>
   <FooterView />
 </template>
@@ -35,7 +36,7 @@ const email = ref('')
 const password = ref('')
 const confirm = ref('')
 
-
+authStore.resetError();
 const signedUp = ref(false)
 
 // validate the email using a regular expression (regex)
@@ -56,7 +57,7 @@ const handleSignUp = async () => {
     return
   }
   if (!passwordCoincides(password.value, confirm.value)) {
-    error.value = 'Passwords do not coincide.'
+    error.value = 'Passwords do not coincide'
     console.log(error.value)
     return
   }
@@ -108,5 +109,9 @@ h1 {
   font-weight: bold;
   margin-top: 10px;
   text-align: center;
+}
+
+.void {
+  height: 30vh;
 }
 </style>

@@ -29,6 +29,8 @@ const router = useRouter()
 const email = ref('')
 const password = ref('')
 
+authStore.resetError();
+
 async function signIn() {
   authStore.resetError()
   await authStore.signIn(email.value, password.value)
@@ -45,6 +47,7 @@ h1 {
   margin-bottom: 2em;
 }
 .form {
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,6 +56,7 @@ h1 {
   background-color: rgba(235, 218, 218, 0.2);
   backdrop-filter: blur(5px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
 }
 
 .form-group {

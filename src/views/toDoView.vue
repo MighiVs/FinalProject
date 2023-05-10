@@ -44,4 +44,9 @@ h1 {
   justify-content: space-around;
   flex-wrap: wrap;
 }
+@media  (min-width: 760px) {
+  
+ 
+  
+}
 </style>
