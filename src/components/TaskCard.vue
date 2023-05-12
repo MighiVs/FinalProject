@@ -1,23 +1,28 @@
 <template>
   <div class="container" :style="{ backgroundColor: cardBackgroundColor }">
-    <ConfettiExplosion v-if="confetti" />
-    <h4>{{ task.task.title }}</h4>
-    <button @click="show = !show">{{ show ? 'Min' : 'Max' }}</button>
+    <ConfettiExplosion v-if="confetti" :force="0.9" :stageHeight="380"/>
+    <div class="mainInfo">
+        <h4>{{ task.task.title }}</h4>
+        <div>
+          <button @click="advanceStatus" v-if="task.task.status < 2"><img src="../assets/icons/right-arrow.png" alt=""></button>
+          <button @click="handleDeleteTask"><img src="../assets/icons/trash.png" alt=""></button>
+        </div>
+      </div>
+    <button class="toggleBtn" @click="show = !show">
+      <img v-if="!show" src="../assets/icons/plus.png" alt="plus">
+      <img v-else src="../assets/icons/minus.png" alt="minus">
+    </button>
     <div v-show="show">
+      <p v-if="task.task.description">
+        {{ task.task.description }}
+      </p>
       <p>
-        Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
+        <small>Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}</small> 
       </p>
       <p v-if="task.task.due_to">
-        Due to: {{ formatDate(task.task.due_to) }}, {{ formatTime(task.task.due_to) }}
+        <small>Due to: {{ formatDate(task.task.due_to) }}, {{ formatTime(task.task.due_to) }}</small> 
       </p>
-      <div>
-        <button @click="advanceStatus" v-if="task.task.status < 2">Next Status</button>
-        <button @click="handleDeleteTask">Delete</button>
-      </div>
-      <div>
-        <button @click="edit = !edit">Toggle Edit</button>
-        <EditTask v-if="edit" :task="task.task" />
-      </div>
+        <EditTask :task="task.task" />
     </div>
   </div>
 </template>
@@ -28,11 +33,12 @@ import { useTaskStore } from '@/stores/tasks.js'
 import EditTask from '@/components/EditTask.vue'
 import ConfettiExplosion from 'vue-confetti-explosion'
 
+
 const taskStore = useTaskStore()
 
 const task = defineProps(['task'])
-const edit = ref(false)
-const show = ref(true)
+
+const show = ref(false)
 
 const confetti = ref(false)
 
@@ -90,10 +96,53 @@ if (task.task.status === 2 && task.task.triggered_confetti === false) {
 </script>
 
 <style scoped>
-.container {
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 1em;
-  overflow: visible;
+img {
+  width: 25px;
+  margin: 0
 }
+
+.mainInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.toggleBtn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 10px;
+  width: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+p {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+button:hover {
+  transform: scale(1.1);  
+}
+
+         
+            
 </style>

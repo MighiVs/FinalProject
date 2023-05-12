@@ -1,12 +1,10 @@
 <template>
     <nav>
-      <ul>
-        <li><RouterLink to="/">Home</RouterLink></li>
-        <li v-if="!authStore.user"><RouterLink to="sign-in">Sign In</RouterLink></li>
-        <li v-if="!authStore.user"><RouterLink to="sign-up">Sign Up</RouterLink></li>
-        <li v-if="authStore.user"><RouterLink to="todolist">Todos</RouterLink></li>
-        <li v-if="authStore.user" @click="handleSignOut">Logout</li>
-      </ul>
+        <RouterLink class="nav-link" to="/">Home</RouterLink>
+        <RouterLink class="nav-link" v-if="!authStore.user" to="sign-in">Sign In</RouterLink>
+        <RouterLink class="nav-link" v-if="!authStore.user" to="sign-up">Sign Up</RouterLink>
+        <RouterLink class="nav-link" v-if="authStore.user" to="todolist">My To-Do List</RouterLink>
+        <a class="nav-link" v-if="authStore.user" @click="handleSignOut">Logout</a> 
     </nav>
   </template>
   
@@ -24,3 +22,22 @@
   }
   
   </script>
+
+  <style scoped>
+
+    nav {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 4em;
+    }
+    .nav-link {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .nav-link:hover {
+      color: #971fce;
+    }
+
+  </style>

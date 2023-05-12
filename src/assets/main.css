@@ -4,6 +4,66 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-
   font-weight: normal;
 }
+
+body {
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+
+
+}
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  margin: 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  background-color: rgb(85, 14, 151);
+  border-color: rgb(85, 14, 151);
+  color: #fff;
+}
+.btn:hover {
+  background-color: #ae36e6;
+  border-color: #ae36e6;
+  color: #fff;
+}
+                         
+@keyframes bounce {
+    0% {transform: translateY(0);}
+    50% {transform: translateY(-10px);}
+    100% {transform: translateY(0);}
+}
+
+
+@keyframes wobble {
+  0% {transform: translateX(0) rotate(0deg);}
+  15% {transform: translateX(-30px) rotate(-5deg);}
+  30% {transform: translateX(15px) rotate(3deg);}
+  45% {transform: translateX(-15px) rotate(-3deg);}
+  60% {transform: translateX(9px) rotate(2deg);}
+  75% {transform: translateX(-6px) rotate(-1deg);}
+  100% {transform: translateX(0) rotate(0deg);}
+}
+            
+@keyframes slide {
+  0% {transform: translateX(0);}
+  50% {transform: translateX(20px);}
+  100% {transform: translateX(0);}
+}
+            
+                  
+            
+          
