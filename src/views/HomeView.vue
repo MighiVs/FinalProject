@@ -79,4 +79,16 @@ h5 {
 p {
   text-align: center;
 }
+
+@media (min-width: 1024px) {
+  .hero {
+    flex-direction: row-reverse;
+  }
+  .hero img {
+    width: 450px;
+  }
+  .hero p {
+    font-size: 25px;
+  }
+}
 </style>

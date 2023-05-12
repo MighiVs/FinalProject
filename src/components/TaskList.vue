@@ -39,11 +39,15 @@ const filteredTasks = computed(() => {
 </script>
 
 <style scoped>
+h4 {
+  text-align: center;
+}
 .task-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 2em;
+  margin: 1em;
 }
+
 
 </style>

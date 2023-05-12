@@ -1,6 +1,6 @@
 <template>
   <div class="container" :style="{ backgroundColor: cardBackgroundColor }">
-    <ConfettiExplosion v-if="confetti" />
+    <ConfettiExplosion v-if="confetti" :force="0.9" :stageHeight="380"/>
     <div class="mainInfo">
         <h4>{{ task.task.title }}</h4>
         <div>
@@ -14,21 +14,15 @@
     </button>
     <div v-show="show">
       <p v-if="task.task.description">
-        Description: {{ task.task.description }}
+        {{ task.task.description }}
       </p>
       <p>
-        Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}
+        <small>Task added: {{ formatDate(task.task.inserted_at) }}, {{ formatTime(task.task.inserted_at) }}</small> 
       </p>
       <p v-if="task.task.due_to">
-        Due to: {{ formatDate(task.task.due_to) }}, {{ formatTime(task.task.due_to) }}
+        <small>Due to: {{ formatDate(task.task.due_to) }}, {{ formatTime(task.task.due_to) }}</small> 
       </p>
-      <div>
-        <button @click="edit = !edit">
-          <img v-if="!edit" src="../assets/icons/edit.png" alt="">
-          <img v-else src="../assets/icons/minus.png" alt="">
-        </button>
-        <EditTask v-if="edit" :task="task.task" />
-      </div>
+        <EditTask :task="task.task" />
     </div>
   </div>
 </template>
@@ -43,7 +37,7 @@ import ConfettiExplosion from 'vue-confetti-explosion'
 const taskStore = useTaskStore()
 
 const task = defineProps(['task'])
-const edit = ref(false)
+
 const show = ref(false)
 
 const confetti = ref(false)
@@ -120,6 +114,7 @@ img {
   cursor: pointer;
   display: inline-block;
   margin-top: 10px;
+  width: auto;
 }
 
 .container {
@@ -145,22 +140,9 @@ button {
 }
 
 button:hover {
-  transform: scale(1.1);
+  transform: scale(1.1);  
 }
 
-.editBtn img {
-  width: 16px;
-  margin-right: 5px;
-}
-
-.deleteBtn img {
-  width: 16px;
-  margin-right: 5px;
-}
-.toggleBtn {
-  
-  display: inline-block;
-  width: auto;
-  border: none;
-}
+         
+            
 </style>

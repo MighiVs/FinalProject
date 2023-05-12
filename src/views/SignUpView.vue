@@ -114,4 +114,10 @@ h1 {
 .void {
   height: 30vh;
 }
+@media only screen and (min-width: 768px) {
+  .form {
+    max-width: 400px; /* reduced max-width for larger screens */
+    margin: auto;
+  }
+}
 </style>

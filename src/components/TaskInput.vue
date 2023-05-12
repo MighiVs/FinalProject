@@ -1,7 +1,7 @@
 <template>
   <form class="row g-3" @submit.prevent="handleAddTask">
     <div class="col-md-6">
-      <label for="task" class="form-label">Task:</label>
+      <label for="task" class="form-label">Title:</label>
       <input type="text" id="task" v-model="task" class="form-control" required />
     </div>
     <div class="col-md-6">

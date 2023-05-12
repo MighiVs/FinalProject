@@ -83,4 +83,10 @@ h1 {
   font-weight: bold;
   margin-top: 10px;
 }
+@media only screen and (min-width: 768px) {
+  .form {
+    max-width: 400px; /* reduced max-width for larger screens */
+    margin: auto;
+  }
+}
 </style>
